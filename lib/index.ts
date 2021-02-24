@@ -15,8 +15,7 @@ export const NanoIndexed = ({
   version,
   uint8Array,
 }: Options) => {
-  // const isHaveIndexedDb = typeof window.indexedDB !== "undefined";
-  const isHaveIndexedDb = false;
+  const isHaveIndexedDb = typeof window.indexedDB !== "undefined";
   if (!isHaveIndexedDb) {
     console.error(
       "[nano-indexed] [Error] Your browser not have indexedDB, Now use localStorage."
