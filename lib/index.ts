@@ -15,7 +15,25 @@ export const NanoIndexed = ({
   version,
   uint8Array,
 }: Options) => {
+  // const isHaveIndexedDb = typeof window.indexedDB !== "undefined";
+  const isHaveIndexedDb = false;
+  if (!isHaveIndexedDb) {
+    console.error(
+      "[nano-indexed] [Error] Your browser not have indexedDB, Now use localStorage."
+    );
+  }
   let db: IDBDatabase;
+
+  // 兼容无 TextDecoder 和 无 TextEncoder 场景
+  if (
+    uint8Array &&
+    (typeof TextDecoder === "undefined" ||
+      typeof TextEncoder === "undefined" ||
+      !isHaveIndexedDb)
+  ) {
+    uint8Array = false;
+  }
+
   let textEncoder: TextEncoder;
   let textDecoder: TextDecoder;
   if (uint8Array) {
@@ -46,12 +64,6 @@ export const NanoIndexed = ({
     });
   };
 
-  const isHaveIndexedDb = typeof window.indexedDB !== "undefined";
-  if (!isHaveIndexedDb) {
-    console.error(
-      "[nano-indexed] [Error] Your browser not have indexedDB, Now use localStorage."
-    );
-  }
   const out = {
     set: async (key: string | number | null, obj: any) => {
       if (!isHaveIndexedDb) {
