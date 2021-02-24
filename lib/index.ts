@@ -48,12 +48,17 @@ export const NanoIndexed = ({
 
   const isHaveIndexedDb = typeof window.indexedDB !== "undefined";
   if (!isHaveIndexedDb) {
-    console.error("[nano-indexed] [Error] Your browser not have indexedDB.");
+    console.error(
+      "[nano-indexed] [Error] Your browser not have indexedDB, Now use localStorage."
+    );
   }
   const out = {
     set: async (key: string | number | null, obj: any) => {
       if (!isHaveIndexedDb) {
-        return new Promise((res, rej) => rej(void 0));
+        return new Promise((res, rej) => {
+          localStorage.setItem((key || 1).toString(), JSON.stringify(obj));
+          res(void 0);
+        });
       }
       if (!db) {
         await initDb();
@@ -83,9 +88,6 @@ export const NanoIndexed = ({
       });
     },
     update: async (key: string | number, obj: any): Promise<any> => {
-      if (!isHaveIndexedDb) {
-        return new Promise((res, rej) => rej(void 0));
-      }
       const old = await out.get(key);
       if (!old) {
         await out.set(key, obj);
@@ -97,7 +99,15 @@ export const NanoIndexed = ({
     },
     get: async (key: string | number): Promise<any> => {
       if (!isHaveIndexedDb) {
-        return new Promise((res, rej) => rej(void 0));
+        return new Promise((res) => {
+          let data = localStorage.getItem((key || 1).toString());
+          if (data) {
+            try {
+              data = JSON.parse(data);
+            } catch (err) {}
+          }
+          res(data);
+        });
       }
       if (!db) {
         await initDb();
@@ -124,7 +134,10 @@ export const NanoIndexed = ({
     },
     remove: async (key: string | number): Promise<any> => {
       if (!isHaveIndexedDb) {
-        return new Promise((res, rej) => rej(void 0));
+        return new Promise((res) => {
+          localStorage.removeItem((key || 1).toString());
+          res(void 0);
+        });
       }
       if (!db) {
         await initDb();

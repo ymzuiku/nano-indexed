@@ -11,6 +11,7 @@ nano indexed 是一个简化的 web-indexedDB 方法
 - 支持 autoIncrement
 - 支持 Typescript
 - 完全 Promise 增删查改
+- 兼容若没有 indexedDB，使用 localStorage 进行存储
 
 ## Use
 

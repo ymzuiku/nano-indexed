@@ -1,6 +1,6 @@
 {
   "name": "nano-indexed",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "private":false,
   "types": "lib/index.ts",
   "main": "es/index.js",
