@@ -1,0 +1,19 @@
+{
+  "name": "nano-indexed",
+  "version": "1.0.1",
+  "private":false,
+  "types": "lib/index.ts",
+  "main": "es/index.js",
+  "scripts": {
+    "es":"esbuild --define:process.env.NODE_ENV=\\\"production\\\" lib/index.* --outdir=es --target=es6 --bundle --format=esm --jsx-factory=aoife --jsx-fragment=aoife.Frag --minify --splitting"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ymzuiku/nano-indexed.git"
+  },
+  "bugs": {
+    "url": "git+https://github.com/ymzuiku/nano-indexed.git"
+  },
+  "homepage": "git+https://github.com/ymzuiku/nano-indexed.git",
+  "license": "MIT"
+}
