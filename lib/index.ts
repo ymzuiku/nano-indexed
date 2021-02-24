@@ -53,7 +53,7 @@ export const NanoIndexed = ({
   const out = {
     set: async (key: string | number | null, obj: any) => {
       if (!isHaveIndexedDb) {
-        return;
+        return new Promise((res, rej) => rej(void 0));
       }
       if (!db) {
         await initDb();
@@ -83,6 +83,9 @@ export const NanoIndexed = ({
       });
     },
     update: async (key: string | number, obj: any): Promise<any> => {
+      if (!isHaveIndexedDb) {
+        return new Promise((res, rej) => rej(void 0));
+      }
       const old = await out.get(key);
       if (!old) {
         await out.set(key, obj);
@@ -94,7 +97,7 @@ export const NanoIndexed = ({
     },
     get: async (key: string | number): Promise<any> => {
       if (!isHaveIndexedDb) {
-        return;
+        return new Promise((res, rej) => rej(void 0));
       }
       if (!db) {
         await initDb();
@@ -121,7 +124,7 @@ export const NanoIndexed = ({
     },
     remove: async (key: string | number): Promise<any> => {
       if (!isHaveIndexedDb) {
-        return;
+        return new Promise((res, rej) => rej(void 0));
       }
       if (!db) {
         await initDb();
